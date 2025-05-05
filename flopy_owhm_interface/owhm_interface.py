@@ -10,10 +10,28 @@ from .lake_writer import write_lake_input
 from .drn_writer import write_drn_input
 from .res_writer import write_res_input
 from .water_accounting_writer import write_water_accounting_input
+from .ghb_writer import write_ghb_input
 from .output_parsers import (
     parse_sfr_output, parse_swr_output, parse_lak_output,
     parse_drn_output, parse_res_output, parse_accounting_output
 )
+from .evt_writer import write_evt_input
+from .ets_writer import write_ets_input
+from .rch_writer import write_rch_input
+from .drt_writer import write_drt_input
+from .mnw2_writer import write_mnw2_input
+from .uzf_writer import write_uzf_input
+from .gage_writer import write_gage_input
+from .chd_writer import write_chd_input
+from .riv_writer import write_riv_input
+from .ssm_writer import write_ssm_input
+from .adv_writer import write_adv_input
+from .dsp_writer import write_dsp_input
+from .gcg_writer import write_gcg_input
+from .lmt_writer import write_lmt_input
+from .rct_writer import write_rct_input
+from .tob_writer import write_tob_input
+from .oc_writer import write_oc_input
 
 class OWHMInterface:
     """
@@ -33,11 +51,11 @@ class OWHMInterface:
 
     def write_input_files(self, flopy_model, workspace: Optional[str] = None, water_accounting: Optional[dict] = None):
         """
-        Generate OWHM input files from a FloPy model, including FMP, MAW, SFR, SWR, LAK, DRN, RES, and water accounting support.
+        Generate OWHM input files from a FloPy model, including FMP, MAW, SFR, SWR, LAK, DRN, RES, GHB, EVT, and water accounting support.
         """
         if hasattr(flopy_model, 'fmp') and flopy_model.fmp is not None:
             output_path = 'FMP.dat' if workspace is None else f'{workspace}/FMP.dat'
-            write_fmp_input(flopy_model.fmp, output_path)
+            write_fmp_input(flopy_model.fmp, output_path, water_accounting=water_accounting)
             self.logger.info(f"Wrote FMP input to {output_path}")
         if hasattr(flopy_model, 'maw') and flopy_model.maw is not None:
             output_path = 'MAW.dat' if workspace is None else f'{workspace}/MAW.dat'
@@ -63,9 +81,78 @@ class OWHMInterface:
             output_path = 'RES.dat' if workspace is None else f'{workspace}/RES.dat'
             write_res_input(flopy_model.res, output_path)
             self.logger.info(f"Wrote RES input to {output_path}")
+        if hasattr(flopy_model, 'ghb') and flopy_model.ghb is not None:
+            output_path = 'GHB.dat' if workspace is None else f'{workspace}/GHB.dat'
+            write_ghb_input(flopy_model.ghb, output_path)
+            self.logger.info(f"Wrote GHB input to {output_path}")
+        if hasattr(flopy_model, 'evt') and flopy_model.evt is not None:
+            output_path = 'EVT.dat' if workspace is None else f'{workspace}/EVT.dat'
+            write_evt_input(flopy_model.evt, output_path)
+            self.logger.info(f"Wrote EVT input to {output_path}")
+        if hasattr(flopy_model, 'ets') and flopy_model.ets is not None:
+            output_path = 'ETS.dat' if workspace is None else f'{workspace}/ETS.dat'
+            write_ets_input(flopy_model.ets, output_path)
+            self.logger.info(f"Wrote ETS input to {output_path}")
+        if hasattr(flopy_model, 'rch') and flopy_model.rch is not None:
+            output_path = 'RCH.dat' if workspace is None else f'{workspace}/RCH.dat'
+            write_rch_input(flopy_model.rch, output_path)
+            self.logger.info(f"Wrote RCH input to {output_path}")
+        if hasattr(flopy_model, 'drt') and flopy_model.drt is not None:
+            output_path = 'DRT.dat' if workspace is None else f'{workspace}/DRT.dat'
+            write_drt_input(flopy_model.drt, output_path)
+            self.logger.info(f"Wrote DRT input to {output_path}")
+        if hasattr(flopy_model, 'mnw2') and flopy_model.mnw2 is not None:
+            output_path = 'MNW2.dat' if workspace is None else f'{workspace}/MNW2.dat'
+            write_mnw2_input(flopy_model.mnw2, output_path)
+            self.logger.info(f"Wrote MNW2 input to {output_path}")
+        if hasattr(flopy_model, 'uzf') and flopy_model.uzf is not None:
+            output_path = 'UZF.dat' if workspace is None else f'{workspace}/UZF.dat'
+            write_uzf_input(flopy_model.uzf, output_path)
+            self.logger.info(f"Wrote UZF input to {output_path}")
+        if hasattr(flopy_model, 'gage') and flopy_model.gage is not None:
+            output_path = 'GAGE.dat' if workspace is None else f'{workspace}/GAGE.dat'
+            write_gage_input(flopy_model.gage, output_path)
+            self.logger.info(f"Wrote GAGE input to {output_path}")
+        if hasattr(flopy_model, 'chd') and flopy_model.chd is not None:
+            output_path = 'CHD.dat' if workspace is None else f'{workspace}/CHD.dat'
+            write_chd_input(flopy_model.chd, output_path)
+            self.logger.info(f"Wrote CHD input to {output_path}")
+        if hasattr(flopy_model, 'riv') and flopy_model.riv is not None:
+            output_path = 'RIV.dat' if workspace is None else f'{workspace}/RIV.dat'
+            write_riv_input(flopy_model.riv, output_path)
+            self.logger.info(f"Wrote RIV input to {output_path}")
+        if hasattr(flopy_model, 'ssm') and flopy_model.ssm is not None:
+            output_path = 'SSM.dat' if workspace is None else f'{workspace}/SSM.dat'
+            write_ssm_input(flopy_model.ssm, output_path)
+            self.logger.info(f"Wrote SSM input to {output_path}")
+        if hasattr(flopy_model, 'adv') and flopy_model.adv is not None:
+            output_path = 'ADV.dat' if workspace is None else f'{workspace}/ADV.dat'
+            write_adv_input(flopy_model.adv, output_path)
+            self.logger.info(f"Wrote ADV input to {output_path}")
+        if hasattr(flopy_model, 'dsp') and flopy_model.dsp is not None:
+            output_path = 'DSP.dat' if workspace is None else f'{workspace}/DSP.dat'
+            write_dsp_input(flopy_model.dsp, output_path)
+            self.logger.info(f"Wrote DSP input to {output_path}")
+        if hasattr(flopy_model, 'gcg') and flopy_model.gcg is not None:
+            output_path = 'GCG.dat' if workspace is None else f'{workspace}/GCG.dat'
+            write_gcg_input(flopy_model.gcg, output_path)
+            self.logger.info(f"Wrote GCG input to {output_path}")
+        if hasattr(flopy_model, 'lmt') and flopy_model.lmt is not None:
+            output_path = 'LMT.dat' if workspace is None else f'{workspace}/LMT.dat'
+            write_lmt_input(flopy_model.lmt, output_path)
+            self.logger.info(f"Wrote LMT input to {output_path}")
+        if hasattr(flopy_model, 'tob') and flopy_model.tob is not None:
+            output_path = 'TOB.dat' if workspace is None else f'{workspace}/TOB.dat'
+            write_tob_input(flopy_model.tob, output_path)
+            self.logger.info(f"Wrote TOB input to {output_path}")
+        if hasattr(flopy_model, 'oc') and flopy_model.oc is not None:
+            output_path = 'OC.dat' if workspace is None else f'{workspace}/OC.dat'
+            write_oc_input(flopy_model.oc, output_path)
+            self.logger.info(f"Wrote OC input to {output_path}")
         if water_accounting is not None:
             output_path = 'ACCOUNTING.dat' if workspace is None else f'{workspace}/ACCOUNTING.dat'
-            write_water_accounting_input(water_accounting, output_path)
+            valid_farm_ids = set(flopy_model.fmp.farm_dict.keys()) if hasattr(flopy_model, 'fmp') and flopy_model.fmp is not None else None
+            write_water_accounting_input(water_accounting, output_path, valid_farm_ids=valid_farm_ids)
             self.logger.info(f"Wrote water accounting input to {output_path}")
         # TODO: Add more package writers for drains, reservoirs, advanced boundaries, etc.
 
